@@ -1,0 +1,29 @@
+spring:
+  profiles:
+    active: local
+server:
+  port: 8081
+topics:
+  retry: 'library-events.RETRY'
+  dlt: 'library-events.DLT'
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092,localhost:9093,localhost:9094
+      key-deserializer: org.apache.kafka.common.serialization.IntegerDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      group-id: library-events-listener-group
+  datasource:
+    url: jdbc:mysql://localhost:3306/shamshee
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 7581902965
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    generate-ddl: true
